@@ -12,3 +12,23 @@ type CreateUserAccount = {
     password: string;
     name: string;
 }
+
+type LoginUserAccount = {
+    email: string;
+    password: string;
+}
+
+class AppwriteService {
+    
+    account;
+
+    constructor(){
+        appwriteClient
+        .setEndpoint(APPWRITE_ENDPOINT)
+        .setProject(APPWRITE_PROJECT_ID)
+
+        this.account = new Account(appwriteClient);
+        
+    }
+
+}
