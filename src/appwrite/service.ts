@@ -30,6 +30,21 @@ class AppwriteService {
         this.account = new Account(appwriteClient);  
     }
 
-    
+    //create a new record of user in appwrite
+    async createAccount({email, password, name}: CreateUserAccount) {
+        try {
+          const user = await this.account.create(ID.unique(), email, password, name);
+          
+            
+        } catch (error) {
+            Snackbar.show({
+                text: String(error),
+                duration: Snackbar.LENGTH_LONG
+            })
+            console.error("Appwrite service :: createAccount() :: ", error)
+        }
+    }
+
+
 
 }
