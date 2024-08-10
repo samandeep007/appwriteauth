@@ -12,8 +12,8 @@
   "dependencies": {
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
-    "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
+    "appwrite": "^15.0.0",
     "react": "18.2.0",
     "react-native": "0.74.5",
     "react-native-config": "^1.5.3",
