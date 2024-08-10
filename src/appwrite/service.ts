@@ -27,8 +27,9 @@ class AppwriteService {
         .setEndpoint(APPWRITE_ENDPOINT)
         .setProject(APPWRITE_PROJECT_ID)
 
-        this.account = new Account(appwriteClient);
-        
+        this.account = new Account(appwriteClient);  
     }
+
+    
 
 }
