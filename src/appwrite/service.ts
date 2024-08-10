@@ -19,23 +19,27 @@ type LoginUserAccount = {
 }
 
 class AppwriteService {
-    
+
     account;
 
-    constructor(){
+    constructor() {
         appwriteClient
-        .setEndpoint(APPWRITE_ENDPOINT)
-        .setProject(APPWRITE_PROJECT_ID)
+            .setEndpoint(APPWRITE_ENDPOINT)
+            .setProject(APPWRITE_PROJECT_ID)
 
-        this.account = new Account(appwriteClient);  
+        this.account = new Account(appwriteClient);
     }
 
     //create a new record of user in appwrite
-    async createAccount({email, password, name}: CreateUserAccount) {
+    async createAccount({ email, password, name }: CreateUserAccount) {
         try {
-          const user = await this.account.create(ID.unique(), email, password, name);
-          
-            
+            const user = await this.account.create(ID.unique(), email, password, name);
+            if (user) {
+                return this.loginAccount({ email, password });
+            } else {
+                return user;
+            }
+
         } catch (error) {
             Snackbar.show({
                 text: String(error),
@@ -45,6 +49,35 @@ class AppwriteService {
         }
     }
 
+    async loginAccount({ email, password }: LoginUserAccount) {
+        try {
+            return await this.account.createEmailPasswordSession(email, password);
+        } catch (error) {
+            Snackbar.show({
+                text: String(error),
+                duration: Snackbar.LENGTH_LONG
+            })
+            console.error("Appwrite service :: loginAccount() :: ", error)
+        }
+    }
 
+    async getCurrenUser() {
+        try {
+            return await this.account.get();     
+        } catch (error) {
+            console.error("Appwrite service :: getCurrentUser() :: ", error)
+        }
+    }
+
+
+    async logout() {
+        try {
+            await this.account.deleteSession('current')
+        } catch (error) {
+            console.error("Appwrite service :: logout() :: ", error)
+        }
+    }
 
 }
+
+export default AppwriteService;
